@@ -1,2 +1,2 @@
 # ai-doc-engine
-AI-powered documentation engine
+AI-powered documentation engine, Work in progress.
