@@ -1,0 +1,1 @@
+export default function DashboardLoading () {return <p> dashboard is loading</p>}
