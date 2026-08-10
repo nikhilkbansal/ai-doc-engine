@@ -1,4 +1,4 @@
-import createDocument from '../../app/actions'
+import createDocument from '../actions'
 export default async function fetchUsers  ()  {
     await new Promise (resolve => setTimeout(resolve, 2000))
     const users = await fetch ("https://jsonplaceholder.typicode.com/users");
