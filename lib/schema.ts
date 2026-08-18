@@ -6,6 +6,7 @@ import {
   real,
   jsonb,
   vector,
+  index,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
@@ -41,7 +42,10 @@ export const repositories = pgTable("repositories", {
     .notNull(),
   createdAt: timestamp("createdAt").notNull(),
   active: boolean("active").notNull(),
-});
+}, (table) => [
+    index('idx_repositories_userId').on(table.userId),
+    index('idx_repositories_intergationId').on(table.integrationId),
+]);
 
 export const webhookEvents = pgTable("webhook_events", {
   id: text("id").primaryKey(),
@@ -52,7 +56,10 @@ export const webhookEvents = pgTable("webhook_events", {
   createdAt: timestamp("createdAt").notNull(),
   eventProcessed: boolean("eventProcessed").notNull(),
   payload: jsonb("payload").notNull(),
-});
+}, (table) => [
+    index('idx_webhookEvents_repositoryId').on(table.repositoryId),
+    index('idx_webhookEvents_eventProcessed').on(table.eventProcessed),
+]);
 
 export const docs = pgTable("docs", {
   id: text("id").primaryKey(),
@@ -64,7 +71,11 @@ export const docs = pgTable("docs", {
   isStale: boolean("isStale").notNull(),
   title: text("title").notNull(),
   content: text("content").notNull(),
-});
+}, (table) => [
+    index('idx_docs_repositoryId').on(table.repositoryId),
+    index('idx_docs_isStale').on(table.isStale),
+    index('idx_docs_createdAt').on(table.createdAt),
+]);
 
 export const embeddings = pgTable("embeddings", {
   id: text("id").primaryKey(),
@@ -73,4 +84,6 @@ export const embeddings = pgTable("embeddings", {
     .references(() => docs.id),
   createdAt: timestamp("createdAt").notNull(),
   vector: vector("vector", { dimensions: 1536 }),
-});
+}, (table) => [
+    index('idx_embeddings_docId').on(table.docId),
+]);
