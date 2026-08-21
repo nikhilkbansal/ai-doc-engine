@@ -1,10 +1,7 @@
 import CreateDocumentForm from "./CreateDocumentForm";
 import { getActiveDocs } from "@/lib/queries";
 
-export default async function fetchUsers() {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  //   const users = await fetch("https://jsonplaceholder.typicode.com/users");
-  //   const data = await users.json();
+export default async function DashBoardPage() {
 const allDocs = await getActiveDocs();
   return (
     <div>
